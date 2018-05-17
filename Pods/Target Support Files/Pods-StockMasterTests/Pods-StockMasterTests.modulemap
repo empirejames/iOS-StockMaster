@@ -1,0 +1,6 @@
+framework module Pods_StockMasterTests {
+  umbrella header "Pods-StockMasterTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
