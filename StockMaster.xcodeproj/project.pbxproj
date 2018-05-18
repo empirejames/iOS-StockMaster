@@ -12,6 +12,7 @@
 		7F881DEACE7C7802AF6F9A42 /* Pods_StockMasterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A70EFA0ADCCCF9EC5925DB76 /* Pods_StockMasterTests.framework */; };
 		F618069A20AD8ABC00415E15 /* SotckTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F618069920AD8ABC00415E15 /* SotckTableViewCell.swift */; };
 		F618069D20AE714800415E15 /* Cosmos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F618069C20AE714800415E15 /* Cosmos.framework */; };
+		F61C99D020AECBCF004D0A49 /* StockItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61C99CF20AECBCF004D0A49 /* StockItem.swift */; };
 		F62EC62120A974E10042D633 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F62EC62020A974E10042D633 /* AppDelegate.swift */; };
 		F62EC62320A974E10042D633 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F62EC62220A974E10042D633 /* SignInViewController.swift */; };
 		F62EC62620A974E10042D633 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F62EC62420A974E10042D633 /* Main.storyboard */; };
@@ -54,6 +55,7 @@
 		B685F7305A1346E4BE81B005 /* Pods-StockMasterUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StockMasterUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-StockMasterUITests/Pods-StockMasterUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		F618069920AD8ABC00415E15 /* SotckTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SotckTableViewCell.swift; sourceTree = "<group>"; };
 		F618069C20AE714800415E15 /* Cosmos.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Cosmos.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F61C99CF20AECBCF004D0A49 /* StockItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockItem.swift; sourceTree = "<group>"; };
 		F62EC61D20A974E00042D633 /* StockMaster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StockMaster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F62EC62020A974E10042D633 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F62EC62220A974E10042D633 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 			isa = PBXGroup;
 			children = (
 				F62EC62020A974E10042D633 /* AppDelegate.swift */,
+				F61C99CF20AECBCF004D0A49 /* StockItem.swift */,
 				F62EC62220A974E10042D633 /* SignInViewController.swift */,
 				F6B7689820AA8BD800C38B30 /* HomeViewController.swift */,
 				F6B7689C20ABDE1900C38B30 /* CustomToolbar.swift */,
@@ -401,6 +404,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F61C99D020AECBCF004D0A49 /* StockItem.swift in Sources */,
 				F618069A20AD8ABC00415E15 /* SotckTableViewCell.swift in Sources */,
 				F62EC62320A974E10042D633 /* SignInViewController.swift in Sources */,
 				F62EC62120A974E10042D633 /* AppDelegate.swift in Sources */,

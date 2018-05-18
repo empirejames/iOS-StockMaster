@@ -105,6 +105,40 @@ class ViewController: UIViewController {
         }
     }
     
+//    @IBAction func didRequestPasswordReset(_ sender: UIButton) {
+//        let prompt = UIAlertController(title: "To Do App", message: "Email:", preferredStyle: .alert)
+//        let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
+//            let userInput = prompt.textFields![0].text
+//            if (userInput!.isEmpty) {
+//                return
+//            }
+//            FIRAuth.auth()?.sendPasswordReset(withEmail: userInput!, completion: { (error) in
+//                if let error = error {
+//                    if let errCode = FIRAuthErrorCode(rawValue: error._code) {
+//                        switch errCode {
+//                        case .errorCodeUserNotFound:
+//                            DispatchQueue.main.async {
+//                                self.showAlert("User account not found. Try registering")
+//                            }
+//                        default:
+//                            DispatchQueue.main.async {
+//                                self.showAlert("Error: \(error.localizedDescription)")
+//                            }
+//                        }
+//                    }
+//                    return
+//                } else {
+//                    DispatchQueue.main.async {
+//                        self.showAlert("You'll receive an email shortly to reset your password.")
+//                    }
+//                }
+//            })
+//        }
+//        prompt.addTextField(configurationHandler: nil)
+//        prompt.addAction(okAction)
+//        present(prompt, animated: true, completion: nil)
+//    }
+    
     @IBAction func loginAction(_ sender: AnyObject) {
         
         if self.emailAccount.text == "" || self.password.text == "" {

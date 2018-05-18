@@ -11,20 +11,29 @@ import Firebase
 
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
     
+    var ListArray: NSArray = ["Hello world", "Swift", "UITableView", "媽!我在這裡"]
+    var yourArray = [String]()
+        var fruits = ["Apple", "Apricot", "Banana", "Blueberry", "Cantaloupe", "Cherry", "Clementine", "Coconut", "Cranberry", "Fig", "Grape", "Grapefruit", "Kiwi fruit", "Lemon", "Lime", "Lychee", "Mandarine", "Mango", "Melon", "Nectarine", "Olive", "Orange", "Papaya", "Peach", "Pear", "Pineapple", "Raspberry", "Strawberry"]
+    var ref: DatabaseReference!
+    var firstname:String=""
+    var list = [AnyObject]()
+    
     @IBOutlet weak var tableViewStock: UITableView!
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return yourArray.count
     }
     
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
       let cell = tableView.dequeueReusableCell(withIdentifier: "stockCell", for: indexPath) as! SotckTableViewCell
+        //cell.getShiNum.text = ListArray.object(at: indexPath.row) as! String
+        cell.stockName.text = yourArray[indexPath.row]
         //myLabel.text = myArr[indexPath.row]
         return cell
     }
     
     
-    var refArtists: DatabaseReference!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,8 +41,15 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         self.tableViewStock.dataSource = self
         self.tableViewStock.delegate = self
-        // Do any additional setup after loading the view.
         
+        loadDataFromFirebase()
+//        ref = Database.database().reference()
+//        ref?.observe(.childAdded, with: { (snapshot) in
+//
+//            let snapshotValue = snapshot.value as? NSDictionary
+//            let getData = snapshotValue as? String
+//            print(getData)
+//        })
         //refArtists = FIRDatabase.database().reference().child("artists");
         
         
@@ -79,6 +95,35 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                                         style: .plain, target:self,
                                         action:#selector(filterClick(_:)))
         toolBar.setItems([btnBack,btnGap1,btnSearch,btnGap2,btnFilter], animated: false)
+    }
+    func loadDataFromFirebase() {
+      var items = [StockItem]()
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        ref = Database.database().reference().child("stocks")
+        ref.observe(.value, with: { snapshot in
+
+           // var tempItems = [NSDictionary]()
+            for itemSnapShot in snapshot.children.allObjects as! [DataSnapshot]{
+                self.firstname = (itemSnapShot.childSnapshot(forPath: "stockName").value as? String)!
+                //let item = StockItem(snapshot: itemSnapShot as! DataSnapshot)
+                self.yourArray.append(self.firstname)
+                print(self.firstname)
+                self.tableViewStock.reloadData()
+            }
+            let stockNumber = snapshot.value
+            //print(stockNumber)
+           
+//            for item in snapshot.children {
+//
+//                //let dict = snapshot.value as! String
+//                print(item)
+//                //tempItems.append(dict)
+//            }
+            
+            //self.items = tempItems
+            //self.tableView.reloadData()
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        })
     }
 
 }
