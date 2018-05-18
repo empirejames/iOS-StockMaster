@@ -1,4 +1,5 @@
 PODS:
+  - Cosmos (15.0.0)
   - Firebase/Auth (5.0.0):
     - Firebase/CoreOnly
     - FirebaseAuth (= 5.0.0)
@@ -28,12 +29,14 @@ PODS:
   - leveldb-library (1.20)
 
 DEPENDENCIES:
+  - Cosmos
   - Firebase/Auth
   - Firebase/Database
   - Firebase/Storage
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
+    - Cosmos
     - Firebase
     - FirebaseAuth
     - FirebaseCore
@@ -44,6 +47,7 @@ SPEC REPOS:
     - leveldb-library
 
 SPEC CHECKSUMS:
+  Cosmos: a6dbd3d0baa0cc8f51f8598f7508d5a09d0a9ade
   Firebase: 4bd804448ab2596794698773d41520a0af101e65
   FirebaseAuth: acbeef02fe7c3a26624e309849f3fe30c84115af
   FirebaseCore: e46e4babb9de298fb2f736958edcc6da1dc60d73
@@ -53,6 +57,6 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 5fa5b80fd20e439ef5f545fb2cb3ca6c6714caa2
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
 
-PODFILE CHECKSUM: e69e7eb215e8731af8ffeb2ffff8b046d9d2c7c4
+PODFILE CHECKSUM: ecec197058dab56e561749f4c1d437d3a47b0450
 
 COCOAPODS: 1.5.0

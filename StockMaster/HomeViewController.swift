@@ -7,18 +7,38 @@
 //
 
 import UIKit
+import Firebase
 
-class HomeViewController: UIViewController{
+class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
+    
+    @IBOutlet weak var tableViewStock: UITableView!
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+      let cell = tableView.dequeueReusableCell(withIdentifier: "stockCell", for: indexPath) as! SotckTableViewCell
+        //myLabel.text = myArr[indexPath.row]
+        return cell
+    }
+    
+    
+    var refArtists: DatabaseReference!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         initToolBar();
+        
+        self.tableViewStock.dataSource = self
+        self.tableViewStock.delegate = self
         // Do any additional setup after loading the view.
         
         //refArtists = FIRDatabase.database().reference().child("artists");
         
         
     }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 //        self.navigationController?.setNavigationBarHidden(false, animated: animated)
