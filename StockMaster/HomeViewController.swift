@@ -12,22 +12,31 @@ import Firebase
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
     
     var ListArray: NSArray = ["Hello world", "Swift", "UITableView", "媽!我在這裡"]
-    var yourArray = [String]()
+    var stockNames = [String]()
+    var stockNumbers = [NSNumber]()
+    var taiShiNumbers = [NSNumber]()
+    var releaseCounts = [NSNumber]()
         var fruits = ["Apple", "Apricot", "Banana", "Blueberry", "Cantaloupe", "Cherry", "Clementine", "Coconut", "Cranberry", "Fig", "Grape", "Grapefruit", "Kiwi fruit", "Lemon", "Lime", "Lychee", "Mandarine", "Mango", "Melon", "Nectarine", "Olive", "Orange", "Papaya", "Peach", "Pear", "Pineapple", "Raspberry", "Strawberry"]
     var ref: DatabaseReference!
-    var firstname:String=""
+    var stockName:String = ""
+    var stockNumber:NSNumber = 0
+    var taiShiNumber:NSNumber = 0
+    var releaseCount:NSNumber = 0
+    
     var list = [AnyObject]()
     
     @IBOutlet weak var tableViewStock: UITableView!
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return yourArray.count
+        return stockNames.count
     }
     
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
       let cell = tableView.dequeueReusableCell(withIdentifier: "stockCell", for: indexPath) as! SotckTableViewCell
         //cell.getShiNum.text = ListArray.object(at: indexPath.row) as! String
-        cell.stockName.text = yourArray[indexPath.row]
+        cell.stockName.text = stockNames[indexPath.row]
+        cell.taiShiNum.text = taiShiNumbers[indexPath.row].stringValue
+        cell.getShiNum.text = releaseCounts[indexPath.row].stringValue
         //myLabel.text = myArr[indexPath.row]
         return cell
     }
@@ -104,10 +113,18 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
            // var tempItems = [NSDictionary]()
             for itemSnapShot in snapshot.children.allObjects as! [DataSnapshot]{
-                self.firstname = (itemSnapShot.childSnapshot(forPath: "stockName").value as? String)!
+                self.stockName = (itemSnapShot.childSnapshot(forPath: "stockName").value as? String)!
+                self.taiShiNumber = (itemSnapShot.childSnapshot(forPath: "tianxiCount").value as? NSNumber)!
+                self.releaseCount = (itemSnapShot.childSnapshot(forPath: "releaseCount").value as? NSNumber)!
+             
+                //self.stockNumbers = [(itemSnapShot.childSnapshot(forPath: "stockNumber").value as? NSNumber)!]
+                
+                //self.stockNumbers = (itemSnapShot.childSnapshot(forPath: "stockName").value as? NSNumber)!
                 //let item = StockItem(snapshot: itemSnapShot as! DataSnapshot)
-                self.yourArray.append(self.firstname)
-                print(self.firstname)
+                self.stockNames.append(self.stockName)
+                self.taiShiNumbers.append(self.taiShiNumber)
+                self.releaseCounts.append(self.releaseCount)
+                print(itemSnapShot)
                 self.tableViewStock.reloadData()
             }
             let stockNumber = snapshot.value
