@@ -7,9 +7,10 @@
 //
 
 import UIKit
-
+import Cosmos
 class SotckTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var cosmosView: CosmosView!
     @IBOutlet weak var stockNum: UILabel!
     @IBOutlet weak var stockName: UILabel!
     @IBOutlet weak var taiShiNum: UILabel!

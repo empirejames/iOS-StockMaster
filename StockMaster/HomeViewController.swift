@@ -16,6 +16,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     var thisYear : [Any] = []
     var stockNumbers : [Any] = []
     var tianxiDay : [Any] = []
+    var tianxiPercents : [Float] = []
     var taiShiNumbers : [NSNumber] = []
     var releaseCounts : [NSNumber] = []
     var ref: DatabaseReference!
@@ -43,7 +44,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         cell.taiShiNum.text = taiShiNumbers[indexPath.row].stringValue
         cell.getShiNum.text = releaseCounts[indexPath.row].stringValue
         cell.taiShiDate.text = (tianxiDay[indexPath.row] as! NSNumber).stringValue
-        
+        cell.cosmosView.rating = Double(tianxiPercents[indexPath.row])
         if thisYear[indexPath.row] is NSNumber {
             //let message = (thisYear[indexPath.row] as! NSNumber).stringValue + ": NSNumber"
             //print(message)
@@ -123,7 +124,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 let releaseCount = (itemSnapShot.childSnapshot(forPath: "releaseCount").value as? NSNumber)!
                 let tianxiDay = (itemSnapShot.childSnapshot(forPath: "tianxiDay").value as Any ) as AnyObject
                 let thisYear = (itemSnapShot.childSnapshot(forPath: "thisYear").value as Any ) as AnyObject
+                let tianxiPercent = (itemSnapShot.childSnapshot(forPath: "tianxiPercent").value as Any ) as AnyObject
+                let convertPercent = ((tianxiPercent as! NSNumber).floatValue)*100/20
+               // print(((tianxiPercent as! NSNumber).floatValue)*100/20)
+                
                 //let item = StockItem(snapshot: itemSnapShot as! DataSnapshot)
+                self.tianxiPercents.append(convertPercent)
                 self.stockNames.append(stockName)
                 self.thisYear.append(thisYear)
                 self.stockNumbers.append(stockNumber)
