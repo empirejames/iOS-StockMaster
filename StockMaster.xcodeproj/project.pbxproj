@@ -23,7 +23,6 @@
 		F6B7689520AA874700C38B30 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F6B7689420AA874700C38B30 /* GoogleService-Info.plist */; };
 		F6B7689920AA8BD800C38B30 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B7689820AA8BD800C38B30 /* HomeViewController.swift */; };
 		F6B7689B20AAA78D00C38B30 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B7689A20AAA78D00C38B30 /* AboutViewController.swift */; };
-		F6B7689D20ABDE1900C38B30 /* CustomToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B7689C20ABDE1900C38B30 /* CustomToolbar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,7 +71,6 @@
 		F6B7689420AA874700C38B30 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		F6B7689820AA8BD800C38B30 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		F6B7689A20AAA78D00C38B30 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
-		F6B7689C20ABDE1900C38B30 /* CustomToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomToolbar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,7 +155,6 @@
 				F61C99CF20AECBCF004D0A49 /* StockItem.swift */,
 				F62EC62220A974E10042D633 /* SignInViewController.swift */,
 				F6B7689820AA8BD800C38B30 /* HomeViewController.swift */,
-				F6B7689C20ABDE1900C38B30 /* CustomToolbar.swift */,
 				F618069920AD8ABC00415E15 /* SotckTableViewCell.swift */,
 				F62EC62420A974E10042D633 /* Main.storyboard */,
 				F62EC62720A974E10042D633 /* Assets.xcassets */,
@@ -408,7 +405,6 @@
 				F618069A20AD8ABC00415E15 /* SotckTableViewCell.swift in Sources */,
 				F62EC62320A974E10042D633 /* SignInViewController.swift in Sources */,
 				F62EC62120A974E10042D633 /* AppDelegate.swift in Sources */,
-				F6B7689D20ABDE1900C38B30 /* CustomToolbar.swift in Sources */,
 				F6B7689B20AAA78D00C38B30 /* AboutViewController.swift in Sources */,
 				F6B7689920AA8BD800C38B30 /* HomeViewController.swift in Sources */,
 			);

@@ -8,20 +8,17 @@
 
 import UIKit
 import Firebase
+import Cosmos
 
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
     
-    var ListArray: NSArray = ["Hello world", "Swift", "UITableView", "媽!我在這裡"]
-    var stockNames = [String]()
-    var stockNumbers = [NSNumber]()
-    var taiShiNumbers = [NSNumber]()
-    var releaseCounts = [NSNumber]()
-        var fruits = ["Apple", "Apricot", "Banana", "Blueberry", "Cantaloupe", "Cherry", "Clementine", "Coconut", "Cranberry", "Fig", "Grape", "Grapefruit", "Kiwi fruit", "Lemon", "Lime", "Lychee", "Mandarine", "Mango", "Melon", "Nectarine", "Olive", "Orange", "Papaya", "Peach", "Pear", "Pineapple", "Raspberry", "Strawberry"]
+    var stockNames : [String] = []
+    var thisYear : [Any] = []
+    var stockNumbers : [Any] = []
+    var tianxiDay : [Any] = []
+    var taiShiNumbers : [NSNumber] = []
+    var releaseCounts : [NSNumber] = []
     var ref: DatabaseReference!
-    var stockName:String = ""
-    var stockNumber:NSNumber = 0
-    var taiShiNumber:NSNumber = 0
-    var releaseCount:NSNumber = 0
     
     var list = [AnyObject]()
     
@@ -33,11 +30,32 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
       let cell = tableView.dequeueReusableCell(withIdentifier: "stockCell", for: indexPath) as! SotckTableViewCell
-        //cell.getShiNum.text = ListArray.object(at: indexPath.row) as! String
+        //cell.stockNum.text = ListArray.object(at: indexPath.row) as! String
         cell.stockName.text = stockNames[indexPath.row]
+        if stockNumbers[indexPath.row] is String{
+            cell.stockNum.text = stockNumbers[indexPath.row] as? String
+        } else{
+            cell.stockNum.text = (stockNumbers[indexPath.row] as! NSNumber).stringValue
+        }
+        
+        //cell.stockNum.text = stockNumbers[indexPath.row] as! String
+        
         cell.taiShiNum.text = taiShiNumbers[indexPath.row].stringValue
         cell.getShiNum.text = releaseCounts[indexPath.row].stringValue
-        //myLabel.text = myArr[indexPath.row]
+        cell.taiShiDate.text = (tianxiDay[indexPath.row] as! NSNumber).stringValue
+        
+        if thisYear[indexPath.row] is NSNumber {
+            //let message = (thisYear[indexPath.row] as! NSNumber).stringValue + ": NSNumber"
+            //print(message)
+            cell.thuShiDate.text = (thisYear[indexPath.row] as! NSNumber).stringValue
+        }else if thisYear[indexPath.row] is NSString{
+            let value = ((thisYear[indexPath.row] as! NSString) as String)
+            if value == ""{
+                cell.thuShiDate.text = "未公告"
+            }else{
+                 cell.thuShiDate.text = ((thisYear[indexPath.row] as! NSString) as String)
+            }
+        }
         return cell
     }
     
@@ -47,20 +65,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         initToolBar();
-        
         self.tableViewStock.dataSource = self
         self.tableViewStock.delegate = self
-        
         loadDataFromFirebase()
-//        ref = Database.database().reference()
-//        ref?.observe(.childAdded, with: { (snapshot) in
-//
-//            let snapshotValue = snapshot.value as? NSDictionary
-//            let getData = snapshotValue as? String
-//            print(getData)
-//        })
-        //refArtists = FIRDatabase.database().reference().child("artists");
-        
         
     }
 
@@ -106,39 +113,26 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         toolBar.setItems([btnBack,btnGap1,btnSearch,btnGap2,btnFilter], animated: false)
     }
     func loadDataFromFirebase() {
-      var items = [StockItem]()
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         ref = Database.database().reference().child("stocks")
         ref.observe(.value, with: { snapshot in
-
-           // var tempItems = [NSDictionary]()
             for itemSnapShot in snapshot.children.allObjects as! [DataSnapshot]{
-                self.stockName = (itemSnapShot.childSnapshot(forPath: "stockName").value as? String)!
-                self.taiShiNumber = (itemSnapShot.childSnapshot(forPath: "tianxiCount").value as? NSNumber)!
-                self.releaseCount = (itemSnapShot.childSnapshot(forPath: "releaseCount").value as? NSNumber)!
-             
-                //self.stockNumbers = [(itemSnapShot.childSnapshot(forPath: "stockNumber").value as? NSNumber)!]
-                
-                //self.stockNumbers = (itemSnapShot.childSnapshot(forPath: "stockName").value as? NSNumber)!
+                let stockName = (itemSnapShot.childSnapshot(forPath: "stockName").value as? String)!
+                let stockNumber = (itemSnapShot.childSnapshot(forPath: "stockNumber").value as Any ) as AnyObject
+                let taiShiNumber = (itemSnapShot.childSnapshot(forPath: "tianxiCount").value as? NSNumber)!
+                let releaseCount = (itemSnapShot.childSnapshot(forPath: "releaseCount").value as? NSNumber)!
+                let tianxiDay = (itemSnapShot.childSnapshot(forPath: "tianxiDay").value as Any ) as AnyObject
+                let thisYear = (itemSnapShot.childSnapshot(forPath: "thisYear").value as Any ) as AnyObject
                 //let item = StockItem(snapshot: itemSnapShot as! DataSnapshot)
-                self.stockNames.append(self.stockName)
-                self.taiShiNumbers.append(self.taiShiNumber)
-                self.releaseCounts.append(self.releaseCount)
-                print(itemSnapShot)
+                self.stockNames.append(stockName)
+                self.thisYear.append(thisYear)
+                self.stockNumbers.append(stockNumber)
+                self.tianxiDay.append(tianxiDay)
+                self.taiShiNumbers.append(taiShiNumber)
+                self.releaseCounts.append(releaseCount)
+                //print(itemSnapShot)
                 self.tableViewStock.reloadData()
             }
-            let stockNumber = snapshot.value
-            //print(stockNumber)
-           
-//            for item in snapshot.children {
-//
-//                //let dict = snapshot.value as! String
-//                print(item)
-//                //tempItems.append(dict)
-//            }
-            
-            //self.items = tempItems
-            //self.tableView.reloadData()
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
         })
     }
