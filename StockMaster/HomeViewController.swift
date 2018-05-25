@@ -21,6 +21,11 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     var releaseCounts : [NSNumber] = []
     var ref: DatabaseReference!
     
+    let effectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+    var activityIndicator = UIActivityIndicatorView()
+    var strLabel = UILabel()
+    
+    
     var list = [AnyObject]()
     
     @IBOutlet weak var tableViewStock: UITableView!
@@ -65,7 +70,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        initToolBar();
+        //initToolBar();
         self.tableViewStock.dataSource = self
         self.tableViewStock.delegate = self
         loadDataFromFirebase()
@@ -91,6 +96,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         // Dispose of any resources that can be recreated.
     }
     func initToolBar(){
+        
         let toolBar =  UIToolbar(frame:CGRect(x:0, y:20, width:UIScreen.main.bounds.width, height:44))
         self.view.addSubview(toolBar)
         let myLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 21))
@@ -115,6 +121,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     func loadDataFromFirebase() {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        activityIndicator("資料更新中 ...")
         ref = Database.database().reference().child("stocks")
         ref.observe(.value, with: { snapshot in
             for itemSnapShot in snapshot.children.allObjects as! [DataSnapshot]{
@@ -140,7 +147,31 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 self.tableViewStock.reloadData()
             }
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            self.effectView.removeFromSuperview()
         })
+    }
+    func activityIndicator(_ title: String) {
+        
+        strLabel.removeFromSuperview()
+        activityIndicator.removeFromSuperview()
+        effectView.removeFromSuperview()
+        
+        strLabel = UILabel(frame: CGRect(x: 50, y: 0, width: 160, height: 46))
+        strLabel.text = title
+        strLabel.font = .systemFont(ofSize: 14, weight: .medium)
+        strLabel.textColor = UIColor(white: 0.9, alpha: 0.7)
+        
+        effectView.frame = CGRect(x: view.frame.midX - strLabel.frame.width/2, y: view.frame.midY - strLabel.frame.height/2 , width: 160, height: 46)
+        effectView.layer.cornerRadius = 15
+        effectView.layer.masksToBounds = true
+        
+        activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .white)
+        activityIndicator.frame = CGRect(x: 0, y: 0, width: 46, height: 46)
+        activityIndicator.startAnimating()
+        
+        effectView.contentView.addSubview(activityIndicator)
+        effectView.contentView.addSubview(strLabel)
+        view.addSubview(effectView)
     }
 
 }
