@@ -19,6 +19,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     var tianxiPercents : [Float] = []
     var taiShiNumbers : [NSNumber] = []
     var releaseCounts : [NSNumber] = []
+    
+    var stockItems = [StockItemModel]()
     var ref: DatabaseReference!
     
     let effectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
@@ -30,37 +32,26 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBOutlet weak var tableViewStock: UITableView!
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return stockNames.count
+        return stockItems.count
     }
     
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
       let cell = tableView.dequeueReusableCell(withIdentifier: "stockCell", for: indexPath) as! SotckTableViewCell
         //cell.stockNum.text = ListArray.object(at: indexPath.row) as! String
-        cell.stockName.text = stockNames[indexPath.row]
-        if stockNumbers[indexPath.row] is String{
-            cell.stockNum.text = stockNumbers[indexPath.row] as? String
-        } else{
-            cell.stockNum.text = (stockNumbers[indexPath.row] as! NSNumber).stringValue
-        }
+        cell.stockName.text = stockItems[indexPath.row].stockName
+        cell.stockNum.text = stockItems[indexPath.row].stockNumber
+        cell.taiShiNum.text = stockItems[indexPath.row].taiShiNumber?.stringValue
+        cell.getShiNum.text = stockItems[indexPath.row].releaseCount?.stringValue
+        cell.taiShiDate.text = stockItems[indexPath.row].tianxiDay
+        cell.cosmosView.rating = Double(stockItems[indexPath.row].convertPercent!)
         
-        //cell.stockNum.text = stockNumbers[indexPath.row] as! String
+        let value = stockItems[indexPath.row].thisYear as? String ?? ""
         
-        cell.taiShiNum.text = taiShiNumbers[indexPath.row].stringValue
-        cell.getShiNum.text = releaseCounts[indexPath.row].stringValue
-        cell.taiShiDate.text = (tianxiDay[indexPath.row] as! NSNumber).stringValue
-        cell.cosmosView.rating = Double(tianxiPercents[indexPath.row])
-        if thisYear[indexPath.row] is NSNumber {
-            //let message = (thisYear[indexPath.row] as! NSNumber).stringValue + ": NSNumber"
-            //print(message)
-            cell.thuShiDate.text = (thisYear[indexPath.row] as! NSNumber).stringValue
-        }else if thisYear[indexPath.row] is NSString{
-            let value = ((thisYear[indexPath.row] as! NSString) as String)
-            if value == ""{
-                cell.thuShiDate.text = "未公告"
-            }else{
-                 cell.thuShiDate.text = ((thisYear[indexPath.row] as! NSString) as String)
-            }
+        if value == ""{
+            cell.thuShiDate.text = "未公告"
+        }else{
+            cell.thuShiDate.text = stockItems[indexPath.row].thisYear as? String ?? ""
         }
         return cell
     }
@@ -135,15 +126,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 let convertPercent = ((tianxiPercent as! NSNumber).floatValue)*100/20
                // print(((tianxiPercent as! NSNumber).floatValue)*100/20)
                 
-                //let item = StockItem(snapshot: itemSnapShot as! DataSnapshot)
-                self.tianxiPercents.append(convertPercent)
-                self.stockNames.append(stockName)
-                self.thisYear.append(thisYear)
-                self.stockNumbers.append(stockNumber)
-                self.tianxiDay.append(tianxiDay)
-                self.taiShiNumbers.append(taiShiNumber)
-                self.releaseCounts.append(releaseCount)
-                //print(itemSnapShot)
+                let arrays = StockItemModel(convertPercent: convertPercent, stockName: stockName, thisYear: thisYear, stockNumber: stockNumber.stringValue, tianxiDay: tianxiDay.stringValue, taiShiNumber: taiShiNumber, releaseCount: releaseCount)
+                self.stockItems.append(arrays)
                 self.tableViewStock.reloadData()
             }
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
